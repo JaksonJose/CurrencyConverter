@@ -58,6 +58,4 @@ export class ConverterService {
 
     return converterResponse.date;
   }
-
-  
 }
