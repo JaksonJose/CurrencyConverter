@@ -1,5 +1,5 @@
 <br />
-<div class="alert alert-danger" role="alert">
+<div class="alert alert-danger" role="alert" *ngIf="isError">
   Error when trying to obtain data. Try it again.
 </div>
 <div class="panel panel-success">
@@ -7,16 +7,25 @@
     Select a currency to be converted
   </div>
   <div class="panel-body text-center">
-    <form action="" class="form-inline">
-      <input type="text" name="value" class="form-control text-right" placeholder="0" required />
-      <select name="currencyFrom" class="from-control" required>
-        <option></option>
+    <form #converterForm="ngForm" class="form-inline">
+      <input type="text" name="value" 
+          class="form-control text-right margin-right"
+           placeholder="0" [(ngModel)]="converter.value" number required />
+      <select name="currencyFrom" class="from-control margin-right" 
+        required [(ngModel)]="converter.currencyFrom">
+        <option [value]="currency.short" *ngFor="let currency of currencies">
+          {{ currency.short }} - {{ currency.description }}
+        </option>
       </select>
-      <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-      <select name="currencyTo" class="form-control">
-        <option></option>
+      <span class="glyphicon glyphicon-arrow-right margin-right" aria-hidden="true"></span>
+      <select name="currencyTo" class="from-control margin-right" required [(ngModel)]="converter.currencyFrom">
+        <option [value]="currency.short" *ngFor="let currency of currencies">
+          {{ currency.short }} - {{ currency.description }}
+        </option>
       </select>
-      <input type="submit" class="btn btn-success" />
+      <input type="submit" class="btn btn-success" 
+        value="Converter" data-toggle="modal" data-target="#modalCotation"
+        [disabled]="!converterForm.form.valid" (click)="converting()" />
     </form>
   </div>
 </div>

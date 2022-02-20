@@ -9,7 +9,7 @@ import { Converter, ConverterResponse } from '../models';
 })
 export class ConverterService {
 
-  private readonly BaseUrl = "http://api.fixer.io/latest";
+  private readonly BaseUrl = "http://api.fixer.io/latest/";
 
   constructor(private httpClient: HttpClient) { }
 
