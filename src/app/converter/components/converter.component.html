@@ -8,24 +8,30 @@
   </div>
   <div class="panel-body text-center">
     <form #converterForm="ngForm" class="form-inline">
-      <input type="text" name="value" 
-          class="form-control text-right margin-right"
-           placeholder="0" [(ngModel)]="converter.value" number required />
+      <input type="text" name="value"class="form-control text-right margin-right" 
+        placeholder="0" [(ngModel)]="convertion.value" number required />
       <select name="currencyFrom" class="from-control margin-right" 
-        required [(ngModel)]="converter.currencyFrom">
+        required [(ngModel)]="convertion.currencyFrom">
         <option [value]="currency.short" *ngFor="let currency of currencies">
           {{ currency.short }} - {{ currency.description }}
         </option>
       </select>
       <span class="glyphicon glyphicon-arrow-right margin-right" aria-hidden="true"></span>
-      <select name="currencyTo" class="from-control margin-right" required [(ngModel)]="converter.currencyFrom">
+      <select name="currencyTo" class="from-control margin-right" required [(ngModel)]="convertion.currencyTo">
         <option [value]="currency.short" *ngFor="let currency of currencies">
           {{ currency.short }} - {{ currency.description }}
         </option>
       </select>
       <input type="submit" class="btn btn-success" 
-        value="Converter" data-toggle="modal" data-target="#modalCotation"
+        value="Converter" data-toggle="modal" data-target="#cotationModal"
         [disabled]="!converterForm.form.valid" (click)="converting()" />
     </form>
   </div>
+  
+  <cotation-modal
+    [id]="'cotationModal'"
+    [convertionResponse]="convertionResponse"
+    [convertion]="convertion"
+    (onConfirm)="init()">
+  </cotation-modal>
 </div>

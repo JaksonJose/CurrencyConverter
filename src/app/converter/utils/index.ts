@@ -1,0 +1,1 @@
+export * from './cotation-modal.component';

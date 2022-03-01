@@ -11,8 +11,10 @@ export class CurrencyService {
 
   constructor() { }
 
-  private currencyObj = [
-    {"short": "AUD", "description": "Autralian Dollar"}
+  private currenciesObj = [
+    {"short": "USD", "description": "American Dollar"},
+    {"short": "BRL", "description": "Brazilian Real"},
+    {"short": "AUD", "description": "Australian Dollar"},
   ]
 
   listAll(): Currency[] {
@@ -22,12 +24,12 @@ export class CurrencyService {
 
     this.currencies = [];
 
-    for (let currencyObj of this.currencyObj) {
+    for (let currencyObj of this.currenciesObj) {
       let currency: Currency = new Currency();
       Object.assign(currency, currencyObj);
       this.currencies.push(currency);
     }
-
+    
     return this.currencies;
   }
 }

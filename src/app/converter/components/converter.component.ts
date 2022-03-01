@@ -11,15 +11,15 @@ import { Converter, ConverterResponse, Currency } from '../models';
 export class ConverterComponent implements OnInit {
 
   public currencies: Array<Currency>;
-  public converter: Converter;
-  public converterResponse: ConverterResponse;
+  public convertion: Converter;
+  public convertionResponse: ConverterResponse;
   public isError: boolean;
 
   @ViewChild("converterForm", { static: true }) converterForm: NgForm;
 
   constructor(
     private currencyService: CurrencyService,
-    //private converterService: ConverterService
+    private converterService: ConverterService
     ) { }
 
   ngOnInit(): void {
@@ -31,7 +31,7 @@ export class ConverterComponent implements OnInit {
    * Call the value convertion
    */
   public init(): void {
-    this.converter = new Converter('USD', 'BRL', null);
+    this.convertion = new Converter('USD', 'BRL', null);
     this.isError = false;
   }
 
@@ -40,8 +40,14 @@ export class ConverterComponent implements OnInit {
    */
   public converting(): void {
     if(this.converterForm.form.valid) {
-      alert(`Converting: ${JSON.stringify(this.converter)}`);
+      this.converterService.converter(this.convertion)
+        .subscribe({next: (response) => {
+          this.convertionResponse  = {
+            date: response.date,
+            currencyDestiny: response[this.convertion.currencyTo.toLowerCase()]
+          }
+        },
+          error: () => this.isError = true})
     }
   }
-
 }

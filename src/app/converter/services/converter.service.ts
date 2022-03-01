@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 import { Converter, ConverterResponse } from '../models';
 
@@ -9,8 +9,8 @@ import { Converter, ConverterResponse } from '../models';
 })
 export class ConverterService {
 
-  private readonly BaseUrl = "http://api.fixer.io/latest/";
-
+  private readonly BaseUrl: string = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/`;
+ 
   constructor(private httpClient: HttpClient) { }
 
   /**
@@ -19,9 +19,8 @@ export class ConverterService {
    * @returns Array<Converter>
    */
   public converter(converter: Converter): Observable<ConverterResponse> {
-    let params = `?base=${converter.currencyFrom}&symbols=${converter.currencyTo}`;
-
-    return this.httpClient.get<ConverterResponse>(this.BaseUrl + params);
+    let params = `${converter.currencyFrom.toLowerCase()}/${converter.currencyTo.toLowerCase()}.json`;
+    return this.httpClient.get<ConverterResponse>(this.BaseUrl + params).pipe(catchError(throwError));
   }
 
   /**
@@ -30,22 +29,9 @@ export class ConverterService {
    * @param converter 
    * @returns number
    */
-  public convertTo(converterResponse: ConverterResponse, converter: Converter): number {
-    if(converterResponse === undefined) return 0;
-
-    return converterResponse.rates[converter.currencyTo];
-  }
-  
-  /**
-   * Return cotation from a response
-   * @param converterResponse 
-   * @param converter 
-   * @returns string
-   */
-  public convertFrom(converterResponse: ConverterResponse, converter: Converter): string {
+  public cotationTo(converterResponse: ConverterResponse): string {
     if(converterResponse === undefined) return '0';
-
-    return converterResponse.rates[converter.currencyFrom].toFixed(4);
+    return converterResponse.currencyDestiny.toFixed(4);
   }
 
   /**
