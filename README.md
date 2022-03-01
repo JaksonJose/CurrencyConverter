@@ -1,5 +1,15 @@
 # CurrencyConverter
 
+This project was created as case study to apply the Angular concepts.
+
+### What I've learned
+- Generating Components, Directives, Pipes, Services and modules
+- One Way and Two Way databiding
+- Template Variables
+- Event Emitter
+- Creating Models
+- Basics of testing
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.4.
 
 ## Development server
