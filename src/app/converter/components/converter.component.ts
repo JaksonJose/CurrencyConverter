@@ -23,7 +23,7 @@ export class ConverterComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.currencies = this.currencyService.listAll();
+    this.FetchAllCurrencies();
     this.init();
   }
 
@@ -33,6 +33,25 @@ export class ConverterComponent implements OnInit {
   public init(): void {
     this.convertion = new Converter('USD', 'BRL', null);
     this.isError = false;
+  }
+
+  private FetchAllCurrencies() {
+    const response = this.currencyService.GetAllCurrencies();
+    let currenciesList = [];  
+    
+    response.subscribe(response => {       
+
+      for(let key in response) {
+        let currencyObj = {
+          "short": key.toUpperCase(),
+          "description": response[key].substring(0, 20)
+        };
+
+        currenciesList.push(currencyObj);
+      }
+    });
+    
+    this.currencies = currenciesList
   }
 
   /**

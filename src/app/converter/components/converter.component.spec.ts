@@ -1,5 +1,8 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ConverterService, CurrencyService } from '..';
+import { FormsModule } from '@angular/forms';
+import { ConverterService, CotationModalComponent, CurrencyService, NumberDirective } from '../../converter';
+import { DataBrPipe } from '../pipes';
 
 import { ConverterComponent } from './converter.component';
 
@@ -9,10 +12,19 @@ describe('ConverterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConverterComponent ],
+      declarations: [ 
+        ConverterComponent,
+        NumberDirective,
+        DataBrPipe,
+        CotationModalComponent
+      ],
       providers: [
         CurrencyService,
         ConverterService
+      ],
+      imports: [
+        FormsModule,
+        HttpClientModule
       ]
     })
     .compileComponents();

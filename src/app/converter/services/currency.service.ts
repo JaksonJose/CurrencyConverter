@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Currency } from '../models';
@@ -7,9 +8,10 @@ import { Currency } from '../models';
 })
 export class CurrencyService {
 
+  private readonly BaseUrl: string = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json`;
   private currencies: Currency[];
 
-  constructor() { }
+  constructor(private service: HttpClient) { }
 
   private currenciesObj = [
     {"short": "USD", "description": "American Dollar"},
@@ -17,19 +19,15 @@ export class CurrencyService {
     {"short": "AUD", "description": "Australian Dollar"},
   ]
 
-  listAll(): Currency[] {
+  public GetAllCurrencies() {
+    return this.service.get<any>(this.BaseUrl);
+  }
+
+  public listAll(currenciesList: any): Currency[] {
     if (this.currencies) {
       return this.currencies;
     }
-
-    this.currencies = [];
-
-    for (let currencyObj of this.currenciesObj) {
-      let currency: Currency = new Currency();
-      Object.assign(currency, currencyObj);
-      this.currencies.push(currency);
-    }
     
-    return this.currencies;
+    return this.currenciesObj;
   }
 }

@@ -8,7 +8,8 @@ import { Converter, ConverterResponse } from '../models';
   providedIn: 'root'
 })
 export class ConverterService {
-
+  // Api resource: https://1abc.net/topics/cryptocurrency/currency-api-uuid-IvVONQY17
+  // https://github.com/fawazahmed0/currency-api
   private readonly BaseUrl: string = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/`;
  
   constructor(private httpClient: HttpClient) { }
